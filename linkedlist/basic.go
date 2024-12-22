@@ -1,17 +1,5 @@
 package linkedlist
 
-type node[T any] struct {
-	elem T
-	next *node[T]
-}
-
-func newNode[T any](elem T) *node[T] {
-	return &node[T]{
-		elem: elem,
-		next: nil,
-	}
-}
-
 type BasicLinkedList[T any] struct {
 	head *node[T]
 }

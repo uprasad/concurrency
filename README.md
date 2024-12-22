@@ -118,3 +118,27 @@ N = 1e5
 | 8   | 1e5 | 2440  ms/op |
 | 16  | 1e5 | 4732  ms/op |
 
+### Lock linked list
+
+Run benchmarks with
+```
+go test -v -bench=BenchmarkLockLinkedList ./linkedlist
+```
+
+N = 1000
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1000 | 0.7  ms/op |
+| 2   | 1000 | 3.0  ms/op |
+| 4   | 1000 | 16.2 ms/op |
+| 8   | 1000 | 58.9 ms/op |
+| 16  | 1000 | 230 ms/op  |
+
+N = 1e5
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1e5 | 78.1  ms/op |
+| 2   | 1e5 | 342.3 ms/op |
+| 4   | 1e5 | 1253 ms/op  |
+| 8   | 1e5 | 6502  ms/op |
+| 16  | 1e5 | 21185  ms/op |

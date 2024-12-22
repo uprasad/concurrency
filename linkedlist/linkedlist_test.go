@@ -81,6 +81,30 @@ func BenchmarkBasicLinkedList_10_000(b *testing.B) {
 	}
 }
 
+func BenchmarkLockLinkedList_1_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			ll := linkedlist.NewLockLinkedList[int]()
+			benchmarkLinkedList(b, ll, p, 1_000)
+			count := 0
+			ll.ForEach(func(elem int) { count++ })
+			b.Logf("expected count: %d, got %d\n", 1_000*p, count)
+		})
+	}
+}
+
+func BenchmarkLockLinkedList_10_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			ll := linkedlist.NewLockLinkedList[int]()
+			benchmarkLinkedList(b, ll, p, 10_000)
+			count := 0
+			ll.ForEach(func(elem int) { count++ })
+			b.Logf("expected count: %d, got %d\n", 10_000*p, count)
+		})
+	}
+}
+
 func benchmarkLinkedList(b *testing.B, ll linkedlist.LinkedList[int], parallelism, count int) {
 	elems := make([]int, 0, count)
 	for i := 0; i < count; i++ {
