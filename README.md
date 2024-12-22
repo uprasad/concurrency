@@ -112,11 +112,11 @@ N = 1000
 N = 1e5
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e5 | 72.3  ms/op |
-| 2   | 1e5 | 201.5 ms/op |
-| 4   | 1e5 | 372.9 ms/op |
-| 8   | 1e5 | 2440  ms/op |
-| 16  | 1e5 | 4732  ms/op |
+| 1   | 1e4 | 72.3  ms/op |
+| 2   | 1e4 | 201.5 ms/op |
+| 4   | 1e4 | 372.9 ms/op |
+| 8   | 1e4 | 2440  ms/op |
+| 16  | 1e4 | 4732  ms/op |
 
 ### Lock linked list
 
@@ -137,11 +137,11 @@ N = 1000
 N = 1e5
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e5 | 78.1  ms/op |
-| 2   | 1e5 | 342.3 ms/op |
-| 4   | 1e5 | 1253 ms/op  |
-| 8   | 1e5 | 6502  ms/op |
-| 16  | 1e5 | 21185  ms/op |
+| 1   | 1e4 | 78.1  ms/op |
+| 2   | 1e4 | 342.3 ms/op |
+| 4   | 1e4 | 1253 ms/op  |
+| 8   | 1e4 | 6502  ms/op |
+| 16  | 1e4 | 21185  ms/op |
 
 ### Couple lock linked list
 Hand-over-hand locking with per-node locks
@@ -163,8 +163,36 @@ N = 1000
 N = 1e5
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e5 | 1041  ms/op |
-| 2   | 1e5 | 1706  ms/op |
-| 4   | 1e5 | 7072  ms/op |
-| 8   | 1e5 | 26399 ms/op |
-| 16  | 1e5 | ???   ms/op |
+| 1   | 1e4 | 1041  ms/op |
+| 2   | 1e4 | 1706  ms/op |
+| 4   | 1e4 | 7072  ms/op |
+| 8   | 1e4 | 26399 ms/op |
+| 16  | 1e4 | ???   ms/op |
+
+## Concurrent queues
+
+## Locked queue
+
+Run benchmarks with
+```
+go test -v -bench=BenchmarkLockQueue ./queue
+```
+
+N = 1000
+| CPU | N    | Performance | Push + Pop |
+|-----|------|-------------|------------|
+| 1   | 1000 | 0.3  ms/op  | 51  us/op  |
+| 2   | 1000 | 1.2  ms/op  | 51  us/op  |
+| 4   | 1000 | 4.1  ms/op  | 122 us/op  |
+| 8   | 1000 | 10.1 ms/op  | 356 us/op  |
+| 16  | 1000 | 20.1 ms/op  | 740 us/op  |
+
+N = 1e5
+| CPU | N   | Push        | Push + Pop  |
+|-----|-----|-------------|-------------|
+| 1   | 1e4 | 3.8  ms/op  | 345   us/op |
+| 2   | 1e4 | 12.5 ms/op  | 826   us/op |
+| 4   | 1e4 | 47.5 ms/op  | 1423  us/op |
+| 8   | 1e4 | 90.2 ms/op  | 3487  us/op |
+| 16  | 1e4 | 226  ms/op  | 10258 us/op |
+
