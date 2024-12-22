@@ -38,7 +38,7 @@ func BenchmarkBasicCounter_100_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewBasicCounter()
 			benchmarkCounter(b, cnt, p, 100_000)
-			fmt.Printf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
 		})
 	}
 }
@@ -48,7 +48,7 @@ func BenchmarkBasicCounter_1_000_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewBasicCounter()
 			benchmarkCounter(b, cnt, p, 1_000_000)
-			fmt.Printf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
 		})
 	}
 }
@@ -58,7 +58,7 @@ func BenchmarkLockCounter_100_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewLockCounter()
 			benchmarkCounter(b, cnt, p, 100_000)
-			fmt.Printf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
 		})
 	}
 }
@@ -68,7 +68,7 @@ func BenchmarkLockCounter_1_000_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewLockCounter()
 			benchmarkCounter(b, cnt, p, 1_000_000)
-			fmt.Printf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
 		})
 	}
 }
@@ -78,7 +78,7 @@ func BenchmarkApproxCounter_100_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewApproxCounter(1000)
 			benchmarkCounter(b, cnt, p, 100_000)
-			fmt.Printf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 100_000*p, cnt.Get())
 		})
 	}
 }
@@ -88,7 +88,7 @@ func BenchmarkApproxCounter_1_000_000(b *testing.B) {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			cnt := counter.NewApproxCounter(1000)
 			benchmarkCounter(b, cnt, p, 1_000_000)
-			fmt.Printf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
+			b.Logf("expected count: %d, got %d\n", 1_000_000*p, cnt.Get())
 		})
 	}
 }

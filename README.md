@@ -15,7 +15,7 @@ Lack of concurrency control causes incorrect counts.
 
 Run benchmarks with
 ```
-go test -bench=BenchmarkBasicCounter ./counter
+go test -v -bench=BenchmarkBasicCounter ./counter
 ```
 
 N = 1e5
@@ -42,7 +42,7 @@ Coarse-grained concurrency control results in accurate counts.
 
 Run benchmarks with
 ```
-go test -bench=BenchmarkLockCounter ./counter
+go test -v -bench=BenchmarkLockCounter ./counter
 ```
 
 N = 1e5
@@ -70,7 +70,7 @@ counter.
 
 Run benchmarks with
 ```
-go test -bench=BenchmarkApproxCounter ./counter
+go test -v -bench=BenchmarkApproxCounter ./counter
 ```
 
 N = 1e5
@@ -90,3 +90,31 @@ N = 1e6
 | 4   | 1e6 | 264  ms/op  |
 | 8   | 1e6 | 637  ms/op  |
 | 16  | 1e6 | 1359 ms/op  |
+
+## Concurrent linked list
+
+### Basic linked list (no locks)
+
+Run benchmarks with
+```
+go test -v -bench=BenchmarkBasicLinkedList ./linkedlist
+```
+
+N = 1000
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1000 | 0.8  ms/op |
+| 2   | 1000 | 1.7  ms/op |
+| 4   | 1000 | 4.9  ms/op |
+| 8   | 1000 | 14.9 ms/op |
+| 16  | 1000 | 68.5 ms/op |
+
+N = 1e5
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1e5 | 72.3  ms/op |
+| 2   | 1e5 | 201.5 ms/op |
+| 4   | 1e5 | 372.9 ms/op |
+| 8   | 1e5 | 2440  ms/op |
+| 16  | 1e5 | 4732  ms/op |
+
