@@ -1,8 +1,12 @@
 package linkedlist
 
+import "sync"
+
 type node[T any] struct {
 	elem T
 	next *node[T]
+
+	mu sync.Mutex // used by coupled locking implementation
 }
 
 func newNode[T any](elem T) *node[T] {

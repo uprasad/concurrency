@@ -57,6 +57,49 @@ func TestBasicLinkedList(t *testing.T) {
 	}
 }
 
+func TestCoupleLockLinkedList(t *testing.T) {
+	tests := []struct {
+		name  string
+		elems []int
+	}{
+		{
+			name:  "empty",
+			elems: []int{},
+		},
+		{
+			name:  "some elements",
+			elems: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			ll := linkedlist.NewCoupleLockLinkedList[int]()
+			for _, elem := range test.elems {
+				ll.Insert(elem)
+			}
+
+			gotElems := make([]int, 0, len(test.elems))
+			ll.ForEach(func(elem int) {
+				gotElems = append(gotElems, elem)
+			})
+
+			if diff := cmp.Diff(test.elems, gotElems); diff != "" {
+				t.Errorf("cmp.Diff: (-want, +got):\n%s", diff)
+			}
+
+			ll.Reset()
+			var gotResetElems []int
+			ll.ForEach(func(elem int) {
+				gotResetElems = append(gotResetElems, elem)
+			})
+			if diff := cmp.Diff([]int(nil), gotResetElems); diff != "" {
+				t.Errorf("cmp.Diff reset: (-want, +got)\n%s", diff)
+			}
+		})
+	}
+}
+
 func BenchmarkBasicLinkedList_1_000(b *testing.B) {
 	for _, p := range parallelisms {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
@@ -97,6 +140,30 @@ func BenchmarkLockLinkedList_10_000(b *testing.B) {
 	for _, p := range parallelisms {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
 			ll := linkedlist.NewLockLinkedList[int]()
+			benchmarkLinkedList(b, ll, p, 10_000)
+			count := 0
+			ll.ForEach(func(elem int) { count++ })
+			b.Logf("expected count: %d, got %d\n", 10_000*p, count)
+		})
+	}
+}
+
+func BenchmarkCoupleLockLinkedList_1_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			ll := linkedlist.NewCoupleLockLinkedList[int]()
+			benchmarkLinkedList(b, ll, p, 1_000)
+			count := 0
+			ll.ForEach(func(elem int) { count++ })
+			b.Logf("expected count: %d, got %d\n", 1_000*p, count)
+		})
+	}
+}
+
+func BenchmarkCoupleLockLinkedList_10_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			ll := linkedlist.NewCoupleLockLinkedList[int]()
 			benchmarkLinkedList(b, ll, p, 10_000)
 			count := 0
 			ll.ForEach(func(elem int) { count++ })

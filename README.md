@@ -142,3 +142,29 @@ N = 1e5
 | 4   | 1e5 | 1253 ms/op  |
 | 8   | 1e5 | 6502  ms/op |
 | 16  | 1e5 | 21185  ms/op |
+
+### Couple lock linked list
+Hand-over-hand locking with per-node locks
+
+Run benchmarks with
+```
+go test -v -bench=BenchmarkCoupleLockLinkedList ./linkedlist
+```
+
+N = 1000
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1000 | 6.6  ms/op |
+| 2   | 1000 | 25.5 ms/op |
+| 4   | 1000 | 101  ms/op |
+| 8   | 1000 | 255  ms/op |
+| 16  | 1000 | 1132 ms/op |
+
+N = 1e5
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1e5 | 1041  ms/op |
+| 2   | 1e5 | 1706  ms/op |
+| 4   | 1e5 | 7072  ms/op |
+| 8   | 1e5 | 26399 ms/op |
+| 16  | 1e5 | ???   ms/op |
