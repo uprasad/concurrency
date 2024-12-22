@@ -62,3 +62,31 @@ N = 1e6
 | 4   | 1e6 | 296  ms/op  |
 | 8   | 1e6 | 754  ms/op  |
 | 16  | 1e6 | 1795 ms/op  |
+
+### Approx counter
+[Code](./counter/approx_counter.go)
+Maintains multiple local counters and periodically combines them into a global
+counter.
+
+Run benchmarks with
+```
+go test -bench=BenchmarkApproxCounter ./counter
+```
+
+N = 1e5
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1e5 | 4     ms/op |
+| 2   | 1e5 | 12.1  ms/op |
+| 4   | 1e5 | 26.8  ms/op |
+| 8   | 1e5 | 70.1  ms/op |
+| 16  | 1e5 | 135.3 ms/op |
+
+N = 1e6
+| CPU | N   | Performance |
+|-----|-----|-------------|
+| 1   | 1e6 | 36   ms/op  |
+| 2   | 1e6 | 109  ms/op  |
+| 4   | 1e6 | 264  ms/op  |
+| 8   | 1e6 | 637  ms/op  |
+| 16  | 1e6 | 1359 ms/op  |
