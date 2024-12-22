@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	parallelisms = []int{16}
+	parallelisms = []int{1, 2, 4, 8, 16}
 )
 
 func doIncs(cnt counter.Counter, incs int) {
@@ -33,6 +33,16 @@ func benchmarkCounter(b *testing.B, cnt counter.Counter, parallelism int, limit 
 	}
 }
 
+func BenchmarkBasicCounter_100_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			cnt := counter.NewBasicCounter()
+			benchmarkCounter(b, cnt, p, 100_000)
+			// fmt.Printf("expected count: %d, got %d\n", (100_000/p)*p, cnt.Get())
+		})
+	}
+}
+
 func BenchmarkBasicCounter_1_000_000(b *testing.B) {
 	for _, p := range parallelisms {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
@@ -43,12 +53,22 @@ func BenchmarkBasicCounter_1_000_000(b *testing.B) {
 	}
 }
 
-func BenchmarkBasicCounter_100_000(b *testing.B) {
+func BenchmarkLockCounter_100_000(b *testing.B) {
 	for _, p := range parallelisms {
 		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
-			cnt := counter.NewBasicCounter()
+			cnt := counter.NewLockCounter()
 			benchmarkCounter(b, cnt, p, 100_000)
 			// fmt.Printf("expected count: %d, got %d\n", (100_000/p)*p, cnt.Get())
+		})
+	}
+}
+
+func BenchmarkLockCounter_1_000_000(b *testing.B) {
+	for _, p := range parallelisms {
+		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+			cnt := counter.NewLockCounter()
+			benchmarkCounter(b, cnt, p, 1_000_000)
+			// fmt.Printf("expected count: %d, got %d\n", (1_000_000/p)*p, cnt.Get())
 		})
 	}
 }
