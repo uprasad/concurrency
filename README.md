@@ -7,7 +7,7 @@ System: `cpu: Intel(R) Core(TM) i5-5257U CPU @ 2.70GHz`
 
 ## Concurrent counter
 
-Benchmark of incrementing counter to `N`. `PROC` goroutines are spun up, each incrementing to `N / PROC`
+Benchmark of incrementing counter to `N`. `PROC` goroutines are spun up, each incrementing to `N`
 
 ### Basic counter (no locks)
 [Code](./counter/basic.go)
@@ -21,20 +21,20 @@ go test -bench=BenchmarkBasicCounter ./counter
 N = 1e5
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e5 | 209 us/op   |
-| 2   | 1e5 | 495 us/op   |
-| 4   | 1e5 | 442 us/op   |
-| 8   | 1e5 | 437 us/op   |
-| 16  | 1e5 | 565 us/op   |
+| 1   | 1e5 | 319  us/op  |
+| 2   | 1e5 | 1088 us/op  |
+| 4   | 1e5 | 1740 us/op  |
+| 8   | 1e5 | 3410 us/op  |
+| 16  | 1e5 | 7594 us/op  |
 
 N = 1e6
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e6 | 2054 us/op  |
-| 2   | 1e6 | 4877 us/op  |
-| 4   | 1e6 | 4266 us/op  |
-| 8   | 1e6 | 4358 us/op  |
-| 16  | 1e6 | 4482 us/op  |
+| 1   | 1e6 | 1.9  ms/op  |
+| 2   | 1e6 | 10.9 ms/op  |
+| 4   | 1e6 | 19.0 ms/op  |
+| 8   | 1e6 | 36.1 ms/op  |
+| 16  | 1e6 | 65.4 ms/op  |
 
 ### Lock counter
 [Code](./counter/lock_counter.go)
@@ -48,17 +48,17 @@ go test -bench=BenchmarkLockCounter ./counter
 N = 1e5
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e5 | 1908  us/op  |
-| 2   | 1e5 | 6105  us/op  |
-| 4   | 1e5 | 5839  us/op  |
-| 8   | 1e5 | 11964 us/op |
-| 16  | 1e5 | 12809 us/op |
+| 1   | 1e5 | 2     ms/op |
+| 2   | 1e5 | 7.8   ms/op |
+| 4   | 1e5 | 25.9  ms/op |
+| 8   | 1e5 | 76.4  ms/op |
+| 16  | 1e5 | 192.7 ms/op |
 
 N = 1e6
 | CPU | N   | Performance |
 |-----|-----|-------------|
-| 1   | 1e6 | 22    ms/op |
-| 2   | 1e6 | 44.6  ms/op |
-| 4   | 1e6 | 82.5  ms/op |
-| 8   | 1e6 | 106.8 ms/op |
-| 16  | 1e6 | 113.3 ms/op |
+| 1   | 1e6 | 19   ms/op  |
+| 2   | 1e6 | 74   ms/op  |
+| 4   | 1e6 | 296  ms/op  |
+| 8   | 1e6 | 754  ms/op  |
+| 16  | 1e6 | 1795 ms/op  |
