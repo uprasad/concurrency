@@ -178,21 +178,48 @@ Run benchmarks with
 go test -v -bench=BenchmarkLockQueue ./queue
 ```
 
-N = 1000
+Push 1e4, Push + Pop 1e3
 | CPU | N    | Performance | Push + Pop |
 |-----|------|-------------|------------|
-| 1   | 1000 | 0.3  ms/op  | 51  us/op  |
-| 2   | 1000 | 1.2  ms/op  | 51  us/op  |
-| 4   | 1000 | 4.1  ms/op  | 122 us/op  |
-| 8   | 1000 | 10.1 ms/op  | 356 us/op  |
-| 16  | 1000 | 20.1 ms/op  | 740 us/op  |
+| 1   | 1000 | 0.3  ms/op  | 40.6 us/op |
+| 2   | 1000 | 1.2  ms/op  | 119 us/op  |
+| 4   | 1000 | 4.1  ms/op  | 345 us/op  |
+| 8   | 1000 | 10.1 ms/op  | 939 us/op  |
+| 16  | 1000 | 20.1 ms/op  | 1162 us/op |
 
-N = 1e5
+N = 1e5, Push + Pop 1e4
 | CPU | N   | Push        | Push + Pop  |
 |-----|-----|-------------|-------------|
-| 1   | 1e4 | 3.8  ms/op  | 345   us/op |
-| 2   | 1e4 | 12.5 ms/op  | 826   us/op |
-| 4   | 1e4 | 47.5 ms/op  | 1423  us/op |
-| 8   | 1e4 | 90.2 ms/op  | 3487  us/op |
-| 16  | 1e4 | 226  ms/op  | 10258 us/op |
+| 1   | 1e4 | 3.8  ms/op  | 297   us/op |
+| 2   | 1e4 | 12.5 ms/op  | 926   us/op |
+| 4   | 1e4 | 47.5 ms/op  | 3778  us/op |
+| 8   | 1e4 | 90.2 ms/op  | 7504  us/op |
+| 16  | 1e4 | 226  ms/op  | 18655 us/op |
+
+
+### Buffered queue
+Uses buffered channels
+
+Run benchmarks with
+```
+go test -v -bench=BenchmarkBufferedQueue ./queue
+```
+
+N = 1e4, Push + Pop 1e3
+| CPU | N   | Push        | Push + Pop  |
+|-----|-----|-------------|-------------|
+| 1   | 1e5 | 1092 us/op  | 40.6  us/op |
+| 2   | 1e5 | 1662 us/op  | 94.4  us/op |
+| 4   | 1e5 | 3312 us/op  | 240   us/op |
+| 8   | 1e5 | 6161 us/op  | 544   us/op |
+| 16  | 1e5 | 1112 us/op  | 1214  us/op |
+
+N = 1e5, Push + Pop 1e4
+| CPU | N   | Push        | Push + Pop  |
+|-----|-----|-------------|-------------|
+| 1   | 1e5 | 11.5 ms/op  | 0.3   ms/op |
+| 2   | 1e5 | 27   ms/op  | 1.2   ms/op |
+| 4   | 1e5 | 32.3 ms/op  | 2.8   ms/op |
+| 8   | 1e5 | 65.3 ms/op  | 5.7   ms/op |
+| 16  | 1e5 | 120  ms/op  | 12.3  ms/op |
 

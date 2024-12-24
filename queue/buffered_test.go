@@ -3,6 +3,7 @@ package queue_test
 import (
 	"concurrency/queue"
 	"errors"
+	"fmt"
 	"math/rand"
 	"testing"
 
@@ -64,6 +65,36 @@ func TestBufferedQueue(t *testing.T) {
 			if diff := cmp.Diff(elems, gotElems); diff != "" {
 				t.Errorf("cmp.Diff: (-want, +got):\n%s", diff)
 			}
+		})
+	}
+}
+
+func BenchmarkBufferedQueue_10_000(b *testing.B) {
+	for _, p := range parallelisms {
+		q := queue.NewBufferedQueue[int](1_000_000) // enough capacity to hold p*10_000 elements
+		b.Run(fmt.Sprintf("Push-%d", p), func(b *testing.B) {
+			benchmarkQueuePush(b, q, p, 10_000)
+			// b.Logf("expected count: %d, got %d\n", 10_000*p, q.Len())
+		})
+
+		b.Run(fmt.Sprintf("Push-Pop-%d", p), func(b *testing.B) {
+			benchmarkQueuePushPop(b, q, p, 1_000)
+			// b.Logf("count %d\n", q.Len())
+		})
+	}
+}
+
+func BenchmarkBufferedQueue_100_000(b *testing.B) {
+	for _, p := range parallelisms {
+		q := queue.NewBufferedQueue[int](10_000_000) // enough capacity to hold p*100_000 elements
+		b.Run(fmt.Sprintf("Push-%d", p), func(b *testing.B) {
+			benchmarkQueuePush(b, q, p, 100_000)
+			// b.Logf("expected count: %d, got %d\n", 10_000*p, q.Len())
+		})
+
+		b.Run(fmt.Sprintf("Push-Pop-%d", p), func(b *testing.B) {
+			benchmarkQueuePushPop(b, q, p, 10_000)
+			// b.Logf("count %d\n", q.Len())
 		})
 	}
 }

@@ -32,6 +32,10 @@ func (q *BufferedQueue[T]) ForEach(f func(elem T)) {
 	panic("unsupported")
 }
 
+func (q *BufferedQueue[T]) Len() int {
+	return len(q.buf)
+}
+
 func NewBufferedQueue[T any](size int) *BufferedQueue[T] {
 	return &BufferedQueue[T]{
 		buf:  make(chan T, size),

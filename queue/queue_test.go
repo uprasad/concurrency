@@ -77,7 +77,7 @@ func TestBasicQueue(t *testing.T) {
 func BenchmarkLockQueue_10_000(b *testing.B) {
 	for _, p := range parallelisms {
 		q := queue.NewLockQueue[int]()
-		b.Run(fmt.Sprintf("%d", p), func(b *testing.B) {
+		b.Run(fmt.Sprintf("Push-%d", p), func(b *testing.B) {
 			benchmarkQueuePush(b, q, p, 10_000)
 			// b.Logf("expected count: %d, got %d\n", 10_000*p, q.Len())
 		})
@@ -145,7 +145,7 @@ func benchmarkQueuePushPop(b *testing.B, q queue.Queue[int], parallelism, count 
 				if rand.Int()%2 == 0 {
 					pushElems(q, elems)
 				} else {
-
+					popElems(q, count)
 				}
 			}()
 		}
