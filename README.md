@@ -171,7 +171,7 @@ N = 1e5
 
 ## Concurrent queues
 
-## Locked queue
+### Locked queue
 
 Run benchmarks with
 ```

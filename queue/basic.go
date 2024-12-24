@@ -4,8 +4,9 @@ type BasicQueue[T any] struct {
 	buf []T
 }
 
-func (q *BasicQueue[T]) Push(elem T) {
+func (q *BasicQueue[T]) Push(elem T) error {
 	q.buf = append(q.buf, elem)
+	return nil
 }
 
 func (q *BasicQueue[T]) Pop() (T, error) {

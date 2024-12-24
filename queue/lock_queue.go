@@ -8,10 +8,11 @@ type LockQueue[T any] struct {
 	mu sync.Mutex
 }
 
-func (q *LockQueue[T]) Push(elem T) {
+func (q *LockQueue[T]) Push(elem T) error {
 	q.mu.Lock()
 	defer q.mu.Unlock()
 	q.buf = append(q.buf, elem)
+	return nil
 }
 
 func (q *LockQueue[T]) Pop() (T, error) {
