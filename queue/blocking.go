@@ -47,9 +47,7 @@ func (q *BlockingQueue[T]) Pop() (T, error) {
 }
 
 func (q *BlockingQueue[T]) Clear() {
-	q.mu.Lock()
-	q.buf = make([]T, q.size)
-	q.mu.Unlock()
+	panic("not supported")
 }
 
 func (q *BlockingQueue[T]) Len() int {
